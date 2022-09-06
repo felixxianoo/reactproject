@@ -1,8 +1,11 @@
 import styles from './App.css';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function App(props) {
+  const defaultColor = '#fff';
   const [count, setCount] = useState(0);
+  const [color, setColor] = useState(defaultColor);
+
   const handleSubtract = () => {
     setCount(count - 1);
   };
@@ -13,13 +16,21 @@ function App() {
     setCount(0);
   };
 
-  let color = '#fff';
-  if (count >= 1) {
-    color = 'green'
-  } else if (count < 0) {
-    color = 'red'
-  } else 
-    color = 'white'
+  
+  // useEffect is similar to hash table
+  useEffect(
+    // Function to run
+    () => {
+      if (count >= 1) {
+        setColor('green');
+      } else if (count < 0) {
+        setColor('red');
+      } else setColor(defaultColor)
+    },
+    // When does this rerun (What needs to change)
+    [count]
+  )
+
 
   return (
     <div className="App">
